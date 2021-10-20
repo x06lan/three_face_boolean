@@ -20,14 +20,12 @@ const animate = function () {
     stats.end()
 };
 function init() {
-    // scene.fog = new THREE.Fog(0xf7d9aa, 100, 950);
     contran.appendChild(stats.dom)
     contran.appendChild(renderer.domElement);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.toneMapping = THREE.NoToneMapping;
     renderer.outputEncoding = THREE.sRGBEncoding;
-    // window.addEventListener('resize', onWindowResize);
 
     camera.position.x = 0
     camera.position.y = 100
@@ -37,9 +35,7 @@ function init() {
     controls.maxPolarAngle = Math.PI * 1.5;
     controls.minDistance = 1;
     controls.maxDistance = 5000;
-    // renderer.shadowMap.enabled = true;
     createLights()
-    // gyaction(new THREE.BoxGeometry(30, 30, 30))
     action()
 
     animate();
@@ -92,7 +88,6 @@ function action() {
     let cube_mesh = new THREE.Mesh(cube, material(0xff0000));
 
     scene.add(three_mesh);
-    // scene.add(cube_mesh)
 
 }
 function createLights() {
@@ -126,12 +121,8 @@ function createLights() {
     var ch = new THREE.CameraHelper(shadowLight.shadow.camera);
     const gridHelper = new THREE.GridHelper(1000, 20);
     let lightProbe = new THREE.LightProbe();
+
     scene.add(lightProbe)
-    // scene.add( new LightProbeHelper( lightProbe, 5 ) );
-    // scene.add(gridHelper);
-    // scene.add(new THREE.AxesHelper(100));
-    // scene.add(hemisphereLight);  
-    // scene.add(ch);
     scene.add(ambientLight);
     scene.add(shadowLight);
     scene.add(shadow);
