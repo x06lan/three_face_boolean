@@ -1,5 +1,5 @@
 # three js face boolean
-main from CSG.js
+main souce from CSG.js
 add two function :
 1. face_toCSG
 2. CSG_toface
