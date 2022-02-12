@@ -96,6 +96,16 @@ CSG.prototype = {
     return CSG.fromPolygons(a.allPolygons());
   },
 
+  clipTo: function (csg) {
+    var a = new CSG.Node(this.clone().polygons);
+    var b = new CSG.Node(csg.clone().polygons);
+    a.clipTo(b);
+    // a.invert()
+    // b.clipTo(a);
+    // a.build(b.allPolygons());
+    return CSG.fromPolygons(a.allPolygons());
+  },
+
   // Return a new CSG solid representing space in this solid but not in the
   // solid `csg`. Neither this solid nor the solid `csg` are modified.
   // 
@@ -550,6 +560,7 @@ CSG.Node.prototype = {
     var front = [], back = [];
     for (var i = 0; i < polygons.length; i++) {
       this.plane.splitPolygon(polygons[i], front, back, front, back);
+      // console.log(front,back)
     }
     if (this.front) front = this.front.clipPolygons(front);
     if (this.back) back = this.back.clipPolygons(back);
@@ -567,6 +578,7 @@ CSG.Node.prototype = {
 
   // Return a list of all polygons in this BSP tree.
   allPolygons: function () {
+    // console.log(this.polygons)
     var polygons = this.polygons.slice();
     if (this.front) polygons = polygons.concat(this.front.allPolygons());
     if (this.back) polygons = polygons.concat(this.back.allPolygons());
@@ -578,6 +590,7 @@ CSG.Node.prototype = {
   // nodes there. Each set of polygons is partitioned using the first polygon
   // (no heuristic is used to pick a good split).
   build: function (polygons) {
+    console.log(this)
     if (!polygons.length) return;
     if (!this.plane) this.plane = polygons[0].plane.clone();
     var front = [], back = [];

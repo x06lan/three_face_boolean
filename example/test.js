@@ -53,17 +53,32 @@ function action() {
         let z = cube.attributes.position.array[i * 3 + 2]
 
         cube_face1.push(x, y, z)
-        cube_face2.push(x + 5, y + 5, z + 5)
+        cube_face2.push(x + 5, y + 10, z + 15)
 
     })
 
+
+    // cube_face1=[0,10,0,
+    //         0,-10,0,
+    //         10,0,0]
+    // cube_face2=[0,0,10,
+    //     10,0,-10,
+    //     0,0,-10]
     let CSGface1 = CSG.face_toCSG(cube_face1)
     let CSGface2 = CSG.face_toCSG(cube_face2);
     let CSGface3;
+
     // CSGface3 = CSGface1.intersect(CSGface2);
     //  CSGface3 = CSGface1.union(CSGface2);
      CSGface3 = CSGface1.subtract(CSGface2);
     //  CSGface3 = CSGface2.subtract(CSGface1);
+
+
+    // CSGface3 = CSGface1.clipTo(CSGface2);
+
+    // CSGface3 = CSGface2.clipTo(CSGface1);
+
+    // CSGface3 = CSGface2.clipTo(CSGface1);
 
     let face = CSG.CSG_toface(CSGface3);
     face = new Float32Array(face)
@@ -71,10 +86,12 @@ function action() {
     //face= [point1.x,point1.y,point1.z,
     //       point2.x,point2.y,point2.z,
     //       point3.x,point3.y,point3.z,.........]
-    console.log(face)
+    // console.log(face)
+
+    // CSGface1 = CSG.CSG_toface(CSG.face_toCSG(cube_face1))
+    // CSGface2 = CSG.CSG_toface(CSG.face_toCSG(cube_face2))
     let geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(face, 3));
-
     let material = function (color) {
         return new THREE.MeshPhongMaterial({
             color: color,
@@ -85,9 +102,11 @@ function action() {
         });
     }
     let three_mesh = new THREE.Mesh(geometry, material(0x00ff00));
-    let cube_mesh = new THREE.Mesh(cube, material(0xff0000));
+
+    // let cube_mesh = new THREE.Mesh(cube, material(0xff0000));
 
     scene.add(three_mesh);
+
 
 }
 function createLights() {
